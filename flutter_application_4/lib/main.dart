@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/app_config.dart';
 import 'package:flutter_application_4/providers/providers.dart';
 import 'package:provider/provider.dart';
 import 'screens/screens.dart';
@@ -24,12 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
-      routes: {
-        'login': ((context) => const LoginScreen()),
-        'register': ((context) => const RegisterScreen()),
-        'home': ((context) => const HomeScreen()),
-      },
+      initialRoute: AppConfig.initialRoute,
+      routes: AppConfig.routes(),
     );
   }
 }
