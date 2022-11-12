@@ -12,7 +12,12 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   var formKey = GlobalKey<FormState>();
-  Map<String, String> formData = {'email': '', 'password': ''};
+  Map<String, String> formData = {
+    'email': '',
+    'password': '',
+    'name': '',
+    'lastname': ''
+  };
   RegisterProvider registerProvider = RegisterProvider();
 
   @override
@@ -26,42 +31,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             const Icon(Icons.supervised_user_circle,
-                size: 200, color: Colors.white),
+                size: 100, color: Colors.white),
             Expanded(
               child: Container(),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Card(
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   width: double.infinity,
                   child: Form(
                     key: formKey,
-                    child: Column(
-                      children: [
-                        const AppTitle('Registrate!'),
-                        const SizedBox(height: 15),
-                        AppFormField(
-                            'email', 'Correo electrónico', Icons.email_outlined,
-                            ((value) {
-                          if (value!.length < 5) {
-                            return "Correo no valido";
-                          }
-                          return null;
-                        }), formData: formData, false),
-                        AppFormField(
-                            'password', 'Contraseña', Icons.password_outlined,
-                            ((value) {
-                          if (value!.length < 3) {
-                            return "Contraseña no valida";
-                          }
-                          return null;
-                        }), formData: formData, true),
-                        ElevatedButton(
-                            onPressed: formRegister,
-                            child: const Text('Registrar'))
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const AppTitle('Registrate!'),
+                          AppFormField('name', 'Nombre',
+                              Icons.supervised_user_circle_rounded, ((value) {
+                            if (value!.length < 3) {
+                              return "Nombre no válido";
+                            }
+                            return null;
+                          }), formData: formData, false),
+                          AppFormField('lastname', 'Apellido',
+                              Icons.person_outline_outlined, ((value) {
+                            if (value!.length < 3) {
+                              return "Apellido no válido";
+                            }
+                            return null;
+                          }), formData: formData, false),
+                          AppFormField('email', 'Correo electrónico',
+                              Icons.email_outlined, ((value) {
+                            if (value!.length < 5) {
+                              return "Correo no válido";
+                            }
+                            return null;
+                          }), formData: formData, false),
+                          AppFormField(
+                              'password', 'Contraseña', Icons.password_outlined,
+                              ((value) {
+                            if (value!.length < 3) {
+                              return "Contraseña no válida";
+                            }
+                            return null;
+                          }), formData: formData, true),
+                          ElevatedButton(
+                              onPressed: formRegister,
+                              child: const Text('Registrar'))
+                        ],
+                      ),
                     ),
                   ),
                 ),
