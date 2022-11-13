@@ -17,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   UserProvider userProvider = UserProvider();
   Map<String, String> formData = {
+    'localId': '',
     'email': '',
     'password': '',
     'name': '',
@@ -26,8 +27,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
 
   XFile? image;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,65 +39,95 @@ class _ProfileScreenState extends State<ProfileScreen> {
     nameController.text = userProvider.user.name!;
     lastnameController.text = userProvider.user.lastname!;
 
+    if (formData['name'] == "") {
+      formData['name'] = nameController.text;
+      formData['lastname'] = lastnameController.text;
+      formData['localId'] = userProvider.user.localId!;
+      formData['image'] = userProvider.user.image!;
+    }
     return Scaffold(
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       appBar: getAppBar(context, 'Perfil', userProvider.user),
       body: Padding(
         padding: const EdgeInsets.all(25),
-        child: ListView(
-          children: [
-            GestureDetector(
-              onTap: () async {
-                final ImagePicker _picker = ImagePicker();
-                image = await _picker.pickImage(source: ImageSource.gallery);
+        child: Form(
+          key: formKey,
+          child: ListView(
+            children: [
+              GestureDetector(
+                  onTap: () async {
+                    final ImagePicker _picker = ImagePicker();
+                    image =
+                        await _picker.pickImage(source: ImageSource.gallery);
 
-                if (image != null) {
-                  final bytes = File(image!.path).readAsBytesSync();
-                  formData['image'] = base64Encode(bytes);
+                    if (image != null) {
+                      final bytes = File(image!.path).readAsBytesSync();
+                      formData['image'] = base64Encode(bytes);
+                    }
+                    setState(() {});
+                  },
+                  child: userProvider.user.image == ""
+                      ? const Image(
+                          image: AssetImage('assets/edit.png'),
+                          height: 200,
+                          width: 200,
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(400),
+                          child: Image.memory(
+                            base64Decode(formData['image']!),
+                            height: 300,
+                            width: 300,
+                            fit: BoxFit.cover,
+                          ))),
+              const SizedBox(height: 20),
+              const Text(
+                'Realiza cambios a tu información!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18),
+              ),
+              AppFormField(
+                  'name', 'Nombre', Icons.label_important_outline_rounded,
+                  ((value) {
+                if (value!.length < 3) {
+                  return "Nombre no válido";
                 }
-                setState(() {});
-              },
-              child: image == null
-                  ? const Image(
-                      image: AssetImage('assets/edit.png'),
-                      height: 200,
-                      width: 200,
-                    )
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(200),
-                      child: Image.file(
-                        File(image!.path),
-                        fit: BoxFit.cover,
-                        height: 200,
-                        width: 200,
-                      ),
-                    ),
-            ),
-            const Text(
-              'Realiza cambios a tu información!',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-            AppFormField(
-                'name', 'Nombre', Icons.label_important_outline_rounded,
-                ((value) {
-              if (value!.length < 3) {
-                return "Nombre no válido";
-              }
-              return null;
-            }), controller: nameController, formData: formData, false),
-            AppFormField(
-                'lastname', 'Apellido', Icons.label_important_outline_rounded,
-                ((value) {
-              if (value!.length < 3) {
-                return "Apellido no válido";
-              }
-              return null;
-            }), controller: lastnameController, formData: formData, false),
-            ElevatedButton(onPressed: (() {}), child: const Text('Actualizar'))
-          ],
+                return null;
+              }), controller: nameController, formData: formData, false),
+              AppFormField(
+                  'lastname', 'Apellido', Icons.label_important_outline_rounded,
+                  ((value) {
+                if (value!.length < 3) {
+                  return "Apellido no válido";
+                }
+                return null;
+              }), controller: lastnameController, formData: formData, false),
+              const SizedBox(
+                height: 20,
+              ),
+              (loading == false)
+                  ? ElevatedButton(
+                      onPressed: formUpdate, child: const Text('Actualizar'))
+                  : Center(child: CircularProgressIndicator())
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  formUpdate() async {
+    if (formKey.currentState!.validate()) {
+      loading = true;
+      setState(() {});
+      bool respuesta = await userProvider.updateUsuario(formData);
+      loading = false;
+      setState(() {});
+      if (respuesta) {
+        AppDialogs.showDialog1(context, 'Datos actualizados!');
+      }
+    } else {
+      AppDialogs.showDialog1(context, 'Error al actualizar');
+    }
   }
 }
