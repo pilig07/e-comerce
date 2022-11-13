@@ -6,6 +6,7 @@ class AppFormField extends StatelessWidget {
   final IconData icon;
   final String? Function(String?)? validator;
   final bool OT;
+  final TextEditingController? controller;
 
   const AppFormField(
     this.name,
@@ -14,6 +15,7 @@ class AppFormField extends StatelessWidget {
     this.validator,
     this.OT, {
     Key? key,
+    this.controller,
     required this.formData,
   }) : super(key: key);
 
@@ -22,6 +24,7 @@ class AppFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       onChanged: (value) {
         formData[name] = value;
       },

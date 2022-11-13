@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
@@ -16,11 +17,34 @@ class _LoginScreenState extends State<LoginScreen> {
   Map<String, String> formData = {'email': '', 'password': ''};
   LoginProvider loginProvider = LoginProvider();
   UserProvider userProvider = UserProvider();
+  bool checkSaveData = false;
+  SharedPreferences? pref;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    loadSharedPreferences();
+    super.initState();
+  }
+
+  loadSharedPreferences() async {
+    pref = await SharedPreferences.getInstance();
+    if (pref != null) {
+      emailController.text = pref!.getString("email").toString();
+      passwordController.text = pref!.getString("password").toString();
+      formData['email'] = emailController.text;
+      formData['password'] = passwordController.text;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     loginProvider = Provider.of<LoginProvider>(context);
     userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -43,7 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         const AppTitle('Iniciar Sesión'),
-                        const SizedBox(height: 15),
                         AppFormField(
                             'email', 'Correo electrónico', Icons.email_outlined,
                             ((value) {
@@ -51,7 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             return "Correo no valido";
                           }
                           return null;
-                        }), formData: formData, false),
+                        }),
+                            controller: emailController,
+                            formData: formData,
+                            false),
                         AppFormField(
                             'password', 'Contraseña', Icons.password_outlined,
                             ((value) {
@@ -59,7 +85,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             return "Contraseña no valida";
                           }
                           return null;
-                        }), formData: formData, true),
+                        }),
+                            controller: passwordController,
+                            formData: formData,
+                            true),
+                        CheckboxListTile(
+                            value: checkSaveData,
+                            title: const Text(
+                              'Recordarme',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            onChanged: ((value) {
+                              setState(() {
+                                checkSaveData = value!;
+                              });
+                            })),
                         ElevatedButton(
                             onPressed: formLogin, child: const Text('Ingresar'))
                       ],
@@ -85,6 +125,10 @@ class _LoginScreenState extends State<LoginScreen> {
       var usuario = await loginProvider.loginUsuario(formData);
       if (usuario != null) {
         userProvider.setUser(usuario);
+        if (checkSaveData && pref != null) {
+          pref!.setString("email", usuario.email!);
+          pref!.setString("password", formData['password']!);
+        }
         showDialog(
             context: context,
             builder: (context) {
