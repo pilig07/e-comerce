@@ -1,3 +1,5 @@
+export 'package:flutter_application_4/screens/profile.dart';
+
 export 'package:flutter_application_4/screens/acerca.dart';
 export 'package:flutter_application_4/screens/mapa.dart';
 export 'package:flutter_application_4/screens/home.dart';

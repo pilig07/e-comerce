@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
+import 'package:provider/provider.dart';
+import '../providers/providers.dart';
 
 class MapaScreen extends StatefulWidget {
   const MapaScreen({Key? key}) : super(key: key);
@@ -9,13 +11,12 @@ class MapaScreen extends StatefulWidget {
 }
 
 class _MapaScreenState extends State<MapaScreen> {
+  UserProvider userProvider = UserProvider();
   @override
   Widget build(BuildContext context) {
+    userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Mapa'),
-        backgroundColor: Colors.indigo,
-      ),
+      appBar: getAppBar(context, 'Mapa', userProvider.user),
       drawer: AppDrawer(),
       body: Container(),
     );

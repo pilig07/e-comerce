@@ -27,14 +27,16 @@ class AppDrawer extends StatelessWidget {
           selected: true,
         ),
         ListTile(
+          title: Text('Perfil'),
+          onTap: (() {
+            Navigator.pushReplacementNamed(context, 'profile');
+          }),
+        ),
+        ListTile(
           title: Text('Mapa'),
           onTap: (() {
             Navigator.pushReplacementNamed(context, 'mapa');
           }),
-        ),
-        ListTile(
-          title: Text('Opción 1'),
-          onTap: (() {}),
         ),
         ListTile(
           title: Text('Opción 2'),

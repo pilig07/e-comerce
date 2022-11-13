@@ -17,10 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     userProvider = Provider.of<UserProvider>(context);
     String name = userProvider.user.name!;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Proyecto App'),
-        backgroundColor: Colors.indigo,
-      ),
+      appBar: getAppBar(context, 'Proyecto App', userProvider.user),
       drawer: AppDrawer(),
       body: Center(child: Text('Bienvenido ' + name)),
     );
