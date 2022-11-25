@@ -27,16 +27,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        color: Colors.indigo,
+        color: Colors.purple,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.supervised_user_circle,
-                size: 100, color: Colors.white),
-            Expanded(
-              child: Container(),
-            ),
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(20.0),
               child: Card(
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -45,6 +42,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     key: formKey,
                     child: SingleChildScrollView(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const AppTitle('Registrate!'),
                           AppFormField('name', 'Nombre',
@@ -98,6 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  // * Validar formulario de registro
   formRegister() async {
     if (formKey.currentState!.validate()) {
       bool respuesta = await registerProvider.registrarUsuario(formData);

@@ -5,7 +5,7 @@ getAppBar(BuildContext context, String name, User user) {
   String initials = user.name!.substring(0, 1) + user.lastname!.substring(0, 1);
   return AppBar(
     title: Text(name),
-    backgroundColor: Colors.indigo,
+    backgroundColor: Colors.purple,
     centerTitle: true,
     actions: [
       GestureDetector(
@@ -13,11 +13,11 @@ getAppBar(BuildContext context, String name, User user) {
           Navigator.pushReplacementNamed(context, 'profile');
         },
         child: CircleAvatar(
-          child: Text(initials),
           backgroundColor: Colors.deepPurple,
+          child: Text(initials),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 20,
       )
     ],

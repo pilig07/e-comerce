@@ -39,9 +39,11 @@ dependencies:
   provider: ^6.0.4
   http: ^0.13.5
   firebase_core: ^2.2.0
+  firebase_database: ^10.0.1
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
   location: ^4.4.0
+  fl_chart: ^0.55.2
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +70,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/edit.png
+    - assets/HabitsPageBackground.png
+    - assets/MainBackground.png
+    - assets/progressPageBackground.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

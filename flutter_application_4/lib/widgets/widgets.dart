@@ -7,3 +7,5 @@ export 'package:flutter_application_4/widgets/app_form_field.dart';
 export 'package:flutter_application_4/widgets/app_title.dart';
 
 export 'package:flutter_application_4/widgets/app_bar.dart';
+
+export 'package:flutter_application_4/widgets/NavigationBar.dart';

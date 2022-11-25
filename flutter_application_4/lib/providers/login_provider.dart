@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class LoginProvider extends ChangeNotifier {
   String endpoint = "https://identitytoolkit.googleapis.com/v1/";
   LoginProvider() {
-    print('iniciando loginp');
+    print('Iniciando login');
   }
 
   Future<User?> loginUsuario(Map<String, String> formData) async {
@@ -24,6 +24,7 @@ class LoginProvider extends ChangeNotifier {
       var responseDB = await http.get(urlDB);
       if (responseDB.statusCode == 200) {
         usario.setUserData(jsonDecode(responseDB.body));
+        print(usario.image);
         return usario;
       }
     }

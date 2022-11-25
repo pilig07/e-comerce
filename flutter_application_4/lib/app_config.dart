@@ -1,3 +1,4 @@
+import 'package:flutter_application_4/screens/home.dart';
 import 'screens/screens.dart';
 
 class AppConfig {
@@ -7,9 +8,9 @@ class AppConfig {
       'login': ((context) => const LoginScreen()),
       'register': ((context) => const RegisterScreen()),
       'home': ((context) => const HomeScreen()),
-      'mapa': ((context) => const MapaScreen()),
-      'acerca': ((context) => const AcercaScreen()),
       'profile': ((context) => const ProfileScreen()),
+      'habits': ((context) => const Habitspage()),
+      'progress': ((context) => const ProgressPage()),
     };
   }
 }

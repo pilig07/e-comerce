@@ -10,8 +10,8 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(children: [
         DrawerHeader(
-            child: Column(
-          children: [
+          child: Column(
+          children: const [
             Icon(
               Icons.person_sharp,
               size: 100,
@@ -20,32 +20,28 @@ class AppDrawer extends StatelessWidget {
           ],
         )),
         ListTile(
-          title: Text('Home'),
+          title: const Text('Resumen'),
           onTap: (() {
             Navigator.pushReplacementNamed(context, 'home');
           }),
           selected: true,
         ),
         ListTile(
-          title: Text('Perfil'),
+          title: const Text('Mis hábitos'),
+          onTap: (() {
+            Navigator.pushReplacementNamed(context, 'habits');
+          }),
+        ),
+        ListTile(
+          title: const Text('Perfil'),
           onTap: (() {
             Navigator.pushReplacementNamed(context, 'profile');
           }),
         ),
         ListTile(
-          title: Text('Mapa'),
+          title: const Text('Progreso'),
           onTap: (() {
-            Navigator.pushReplacementNamed(context, 'mapa');
-          }),
-        ),
-        ListTile(
-          title: Text('Opción 2'),
-          onTap: (() {}),
-        ),
-        ListTile(
-          title: Text('Acerca'),
-          onTap: (() {
-            Navigator.pushReplacementNamed(context, 'acerca');
+            Navigator.pushReplacementNamed(context, 'progress');
           }),
         ),
       ]),

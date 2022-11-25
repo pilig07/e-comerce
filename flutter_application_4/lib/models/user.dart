@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
@@ -25,6 +26,7 @@ class User {
   String? image;
   double? latitude;
   double? longitude;
+  List? habitos;
 
   setUserData(Map<String, dynamic> json) {
     name = json['name'];

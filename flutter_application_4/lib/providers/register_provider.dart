@@ -23,15 +23,16 @@ class RegisterProvider extends ChangeNotifier {
               usuario.localId! +
               '.json');
       var responseDB = await http.put(urlDB,
-          body: jsonEncode(
-              {'name': formData['name'], 'lastname': formData['lastname']}));
+        body: jsonEncode({
+          'name': formData['name'], 
+          'lastname': formData['lastname']
+        })
+      );
       if (responseDB.statusCode == 200) {
         return true;
       } else {
         return false;
       }
-
-      return true;
     }
     return false;
   }

@@ -47,17 +47,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       body: Container(
+        alignment: Alignment.center,
         width: double.infinity,
-        color: Colors.indigo,
+        color: Colors.purple,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.supervised_user_circle,
-                size: 200, color: Colors.white),
-            Expanded(
-              child: Container(),
-            ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(20.0),
               child: Card(
                 child: Container(
                   padding: const EdgeInsets.all(10),
