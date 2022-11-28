@@ -82,27 +82,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
                   surfaceTintColor: MaterialStateProperty.all(Colors.purpleAccent)
                 ),
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    bool result = await userProvider.saveHabit(habitNameController.text, habitDescriptionController.text, false);
-                    if(result){
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Habito guardado correctamente'),
-                          backgroundColor: Colors.white10,
-                        )
-                      );
-                    }else{
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Algo salio mal'),
-                          backgroundColor: Colors.white10,
-                        )
-                      );
-                    }
-                  }
+                onPressed: () {
+                  setState(() {
+                    addToHabitList(habitNameController.text,
+                        habitDescriptionController.text);
+                  });
+                  Navigator.pop(context);
+                  // if (_formKey.currentState!.validate()) {
+                  //   bool result = await userProvider.saveHabit(habitNameController.text, habitDescriptionController.text, false);
+                  //   if(result){
+                  //     // ignore: use_build_context_synchronously
+                  //     ScaffoldMessenger.of(context).showSnackBar(
+                  //       const SnackBar(
+                  //         content: Text('Habito guardado correctamente'),
+                  //         backgroundColor: Colors.white10,
+                  //       )
+                  //     );
+                  //   }else{
+                  //     // ignore: use_build_context_synchronously
+                  //     ScaffoldMessenger.of(context).showSnackBar(
+                  //       const SnackBar(
+                  //         content: Text('Algo salio mal'),
+                  //         backgroundColor: Colors.white10,
+                  //       )
+                  //     );
+                  //   }
+                  // }
                 },
                 child: const Text("Guardar")
               )
